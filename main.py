@@ -4,7 +4,12 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog
 
-def update_entry_value(entry, new_value):
+# Очистить поля ввода данных
+def clear_fields():
+    update_entry_value(weight_entry)
+    update_entry_value(height_entry)
+
+def update_entry_value(entry, new_value=''):
     entry.delete(0, END)
     entry.insert(0, new_value)
 
@@ -96,5 +101,14 @@ opendialog_btn = Button(
 )
 
 opendialog_btn.grid(row=5, column=2)
+
+# диалоговое окно
+clearfields_btn = Button(
+   frame, 
+   text="Очистить поля ввода данных",
+   command=clear_fields
+)
+
+clearfields_btn.grid(row=6, column=2)
 
 window.mainloop()
