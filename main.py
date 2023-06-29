@@ -88,7 +88,10 @@ weight_entry.grid(row=4, column=3)
 calc_btn = Button(
     frame,
     text='Рассчитать ИМТ',
-    command=calc_bmi
+    command=calc_bmi,
+    bg="green",
+    fg="white",
+    cursor="dot"
 )
 
 calc_btn.grid(row=5, column=3)
@@ -96,7 +99,7 @@ calc_btn.grid(row=5, column=3)
 # диалоговое окно
 opendialog_btn = Button(
    frame, 
-   text="Заполнить из текстового файла",
+   text="Заполнить из файла",
    command=fill_from_file
 )
 
@@ -105,7 +108,7 @@ opendialog_btn.grid(row=5, column=2)
 # диалоговое окно
 clearfields_btn = Button(
    frame, 
-   text="Очистить поля ввода данных",
+   text="Очистить поля",
    command=clear_fields
 )
 
