@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import *
-from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog
 
@@ -28,7 +27,7 @@ def fill_from_file():
                  
 def calc_bmi():
     try:
-        kg = int(weight_entry.get())
+        kg = float(weight_entry.get())
         m = int(height_entry.get()) / 100
         if kg <=0 or m <= 0:
            raise ValueError('Вес и рост должны быть больше нуля')
@@ -44,76 +43,24 @@ def calc_bmi():
         else:
             messagebox.showinfo('Итог', f'ИМТ = {bmi} соответствует ожирению') 
     except ValueError as e:
-            messagebox.showerror('Ошибка ввода данных', str(e))
+            messagebox.showerror(str(e))
 
-window = Tk()
-# ширина и высота в пикселях
-window.geometry('500x500')
-# название окна
-window.title('Расчет ИМТ')
+root = Tk()
+root.geometry('500x500') # ширина и высота в пикселях
+root.title('Расчет ИМТ') # название окна
 
-frame = Frame(
-    window, 
-    padx=10,  # задаем отступ по горизонтали
-    pady=10   # задаем отступ по вертикали
-)
+frame = Frame(root).grid(column=0, row=0)
 
-frame.pack(expand=True)
+height_lbl = Label(frame, text='Введите ваш рост в см',font=('Arial Bold', 10)).grid(row=3, column=2)
+height_entry = Entry(frame)
+height_entry.grid(row=3, column=3, columnspan=2)
 
-height_lbl = Label(
-    frame, 
-    text='Введите ваш рост в см',
-    font=('Arial Bold', 10)
-)
-# установим позицию элемента в окне
-height_lbl.grid(row=3, column=2)
+weight_lbl = Label(frame, text='Введите ваш вес в кг',font=('Arial Bold', 10)).grid(row=4, column=2)
+weight_entry = Entry(frame)
+weight_entry.grid(row=4, column=3, columnspan=2)
 
-height_entry = Entry(
-    frame,
-    width=30
-)
-height_entry.grid(row=3, column=3)
+calc_btn = Button(frame,text='Рассчитать ИМТ',command=calc_bmi,bg="green",fg="white",cursor="dot").grid(row=5, column=4)
+clearfields_btn = Button(frame, text="Очистить поля",command=clear_fields).grid(row=5, column=3)
+opendialog_btn = Button(frame, text="Заполнить из файла",command=fill_from_file).grid(row=5, column=2)
 
-weight_lbl = Label(
-    frame, 
-    text='Введите ваш вес в кг',
-    font=('Arial Bold', 10)
-)
-weight_lbl.grid(row=4, column=2)
-
-weight_entry = Entry(
-    frame,
-    width=30
-)
-weight_entry.grid(row=4, column=3)
-
-calc_btn = Button(
-    frame,
-    text='Рассчитать ИМТ',
-    command=calc_bmi,
-    bg="green",
-    fg="white",
-    cursor="dot"
-)
-
-calc_btn.grid(row=5, column=3)
-
-# диалоговое окно
-opendialog_btn = Button(
-   frame, 
-   text="Заполнить из файла",
-   command=fill_from_file
-)
-
-opendialog_btn.grid(row=5, column=2)
-
-# диалоговое окно
-clearfields_btn = Button(
-   frame, 
-   text="Очистить поля",
-   command=clear_fields
-)
-
-clearfields_btn.grid(row=6, column=2)
-
-window.mainloop()
+root.mainloop()
