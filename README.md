@@ -21,7 +21,7 @@ python main.py
 pip install auto-py-to-exe
 ```
 
-Затем запустить его в терминале при попощи команды ниже и в открывшемся окне выбрать "One Directory" и "Windows Based":
+Затем запустить его в терминале при помощи команды ниже и в открывшемся окне выбрать "One Directory" и "Windows Based":
 ```python
 auto-py-to-exe
 ```
