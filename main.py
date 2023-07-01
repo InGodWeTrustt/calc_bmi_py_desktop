@@ -6,8 +6,8 @@ from tkinter import filedialog
 
 # Очистить поля ввода данных
 def clear_fields():
-    update_entry_value(weight_entry)
-    update_entry_value(height_entry)
+    weight_entry.delete(0, END)
+    height_entry.delete(0, END)
 
 def update_entry_value(entry, new_value=''):
     entry.delete(0, END)
@@ -48,7 +48,7 @@ def calc_bmi():
 
 window = Tk()
 # ширина и высота в пикселях
-window.geometry('400x400')
+window.geometry('500x500')
 # название окна
 window.title('Расчет ИМТ')
 
@@ -70,6 +70,7 @@ height_lbl.grid(row=3, column=2)
 
 height_entry = Entry(
     frame,
+    width=30
 )
 height_entry.grid(row=3, column=3)
 
@@ -82,6 +83,7 @@ weight_lbl.grid(row=4, column=2)
 
 weight_entry = Entry(
     frame,
+    width=30
 )
 weight_entry.grid(row=4, column=3)
 
