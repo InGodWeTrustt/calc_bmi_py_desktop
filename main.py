@@ -1,5 +1,5 @@
-import tkinter as tk
 from tkinter import *
+from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog
 
@@ -43,24 +43,27 @@ def calc_bmi():
         else:
             messagebox.showinfo('Итог', f'ИМТ = {bmi} соответствует ожирению') 
     except ValueError as e:
-            messagebox.showerror(str(e))
+            messagebox.showerror('Ошибка', str(e))
 
 root = Tk()
 root.geometry('500x500') # ширина и высота в пикселях
 root.title('Расчет ИМТ') # название окна
+root.columnconfigure(0, weight=1)
+root.rowconfigure(0, weight=1)
 
-frame = Frame(root).grid(column=0, row=0)
+frame = ttk.Frame(root, borderwidth=5)
+frame.grid(column=0, row=0)
 
-height_lbl = Label(frame, text='Введите ваш рост в см',font=('Arial Bold', 10)).grid(row=3, column=2)
-height_entry = Entry(frame)
+height_lbl = ttk.Label(frame, text='Введите ваш рост в см',font=('Arial Bold', 10)).grid(row=3, column=2)
+height_entry = ttk.Entry(frame)
 height_entry.grid(row=3, column=3, columnspan=2)
 
-weight_lbl = Label(frame, text='Введите ваш вес в кг',font=('Arial Bold', 10)).grid(row=4, column=2)
-weight_entry = Entry(frame)
+weight_lbl = ttk.Label(frame, text='Введите ваш вес в кг',font=('Arial Bold', 10)).grid(row=4, column=2)
+weight_entry = ttk.Entry(frame)
 weight_entry.grid(row=4, column=3, columnspan=2)
 
-calc_btn = Button(frame,text='Рассчитать ИМТ',command=calc_bmi,bg="green",fg="white",cursor="dot").grid(row=5, column=4)
-clearfields_btn = Button(frame, text="Очистить поля",command=clear_fields).grid(row=5, column=3)
-opendialog_btn = Button(frame, text="Заполнить из файла",command=fill_from_file).grid(row=5, column=2)
+calc_btn = ttk.Button(frame,text='Рассчитать ИМТ',command=calc_bmi).grid(row=5, column=4)
+clearfields_btn = ttk.Button(frame, text="Очистить поля",command=clear_fields).grid(row=5, column=3)
+opendialog_btn = ttk.Button(frame, text="Заполнить из файла",command=fill_from_file).grid(row=5, column=2)
 
 root.mainloop()
