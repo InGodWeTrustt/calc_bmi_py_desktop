@@ -67,7 +67,7 @@ opendialog_btn = tk.Button(frame, text="Заполнить из файла",comm
 
 original_color_btn = calc_btn.cget('bg')
 
-calc_btn.bind('<Enter>', lambda x : calc_btn.config(bg="red"))
-calc_btn.bind('<Leave>', lambda x : calc_btn.config(bg=original_color_btn))
+calc_btn.bind('<Enter>', lambda x : calc_btn.config(bg="red", fg="white"))
+calc_btn.bind('<Leave>', lambda x : calc_btn.config(bg=original_color_btn, fg="black"))
 
 root.mainloop()
