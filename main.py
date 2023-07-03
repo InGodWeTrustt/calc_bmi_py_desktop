@@ -1,15 +1,16 @@
-from tkinter import *
 import tkinter as tk
+from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog
+import config as cfg
 
 # Очистить поля ввода данных
 def clear_fields():
-    weight_entry.delete(0, END)
-    height_entry.delete(0, END)
+    weight_entry.delete(0, tk.END)
+    height_entry.delete(0, tk.END)
 
 def update_entry_value(entry, new_value=''):
-    entry.delete(0, END)
+    entry.delete(0, tk.END)
     entry.insert(0, new_value)
 
 def fill_from_file():
@@ -44,30 +45,45 @@ def calc_bmi():
             messagebox.showerror('Ошибка', str(e))
         
 root = tk.Tk()
-root.geometry('500x500') # ширина и высота в пикселях
-root.title('Расчет ИМТ') # название окна
+root.geometry(cfg.app_size)
+root.title(cfg.app_title) 
+root.config(bg="#9ec9cf")
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
 
-frame = tk.Frame(root)
+
+frame = tk.Frame(
+    root, 
+    bg=cfg.main_bg_color, 
+    padx=20, 
+    pady=20,
+    borderwidth=1,
+    relief="solid"
+)
 frame.grid(column=0, row=0)
 
-height_lbl = tk.Label(frame, text='Введите ваш рост в см',font=('Arial Bold', 10)).grid(row=3, column=2)
+height_lbl = tk.Label(frame, text='Введите ваш рост в см',font=('Arial Bold', 10), bg=cfg.main_bg_color, fg="white")
+height_lbl.grid(row=3, column=2, sticky='W')
 height_entry = tk.Entry(frame)
 height_entry.grid(row=3, column=3, columnspan=2)
 
-weight_lbl = tk.Label(frame, text='Введите ваш вес в кг',font=('Arial Bold', 10)).grid(row=4, column=2)
+weight_lbl = tk.Label(frame, text='Введите ваш вес в кг',font=('Arial Bold', 10), fg="white", bg=cfg.main_bg_color).grid(row=4, column=2, sticky='W')
 weight_entry = tk.Entry(frame)
 weight_entry.grid(row=4, column=3, columnspan=2)
 
 calc_btn = tk.Button(frame,text='Рассчитать ИМТ',command=calc_bmi)
 calc_btn.grid(row=5, column=4)
 clearfields_btn = tk.Button(frame, text="Очистить поля",command=clear_fields).grid(row=5, column=3)
-opendialog_btn = tk.Button(frame, text="Заполнить из файла",command=fill_from_file).grid(row=5, column=2)
+opendialog_btn = tk.Button(frame, text="Заполнить из файла",command=fill_from_file).grid(row=5, column=2, sticky='W')
 
 original_color_btn = calc_btn.cget('bg')
 
+# <Enter> - при переходе курсора мыши на элемент мы меняем цвет фона на красный, а цвет текста на белый
+# <Leave> - когда курсор мыши покидает данный элеменьт мы меняем все на исходные значения
 calc_btn.bind('<Enter>', lambda x : calc_btn.config(bg="red", fg="white"))
 calc_btn.bind('<Leave>', lambda x : calc_btn.config(bg=original_color_btn, fg="black"))
+
+for child in frame.winfo_children(): 
+    child.grid_configure(padx=5, pady=5)
 
 root.mainloop()
