@@ -78,12 +78,13 @@ opendialog_btn = tk.Button(frame, text="Заполнить из файла",comm
 
 original_color_btn = calc_btn.cget('bg')
 
-# <Enter> - при переходе курсора мыши на элемент мы меняем цвет фона на красный, а цвет текста на белый
-# <Leave> - когда курсор мыши покидает данный элеменьт мы меняем все на исходные значения
-calc_btn.bind('<Enter>', lambda x : calc_btn.config(bg="red", fg="white"))
-calc_btn.bind('<Leave>', lambda x : calc_btn.config(bg=original_color_btn, fg="black"))
-
 for child in frame.winfo_children(): 
     child.grid_configure(padx=5, pady=5)
+    if isinstance(child, tk.Button):
+        # <Enter> - при переходе курсора мыши на элемент мы меняем цвет фона на красный, а цвет текста на белый
+        # <Leave> - когда курсор мыши покидает данный элеменьт мы меняем все на исходные значения
+        # навешиваю обработчики события на каждую кнопку
+        child.bind('<Enter>', lambda event : event.widget.config(bg="blue", fg="white"))
+        child.bind('<Leave>', lambda event : event.widget.config(bg=original_color_btn, fg="black"))
 
 root.mainloop()
