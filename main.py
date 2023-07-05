@@ -87,4 +87,8 @@ for child in frame.winfo_children():
         child.bind('<Enter>', lambda event : event.widget.config(bg="blue", fg="white"))
         child.bind('<Leave>', lambda event : event.widget.config(bg=original_color_btn, fg="black"))
 
+# calc_bmi будет вызываться каждый раз, когда пользователь нажимает кнопку enter в полях ввода
+height_entry.bind('<Return>', lambda x: calc_bmi())
+weight_entry.bind('<Return>', lambda x: calc_bmi())
+
 root.mainloop()
