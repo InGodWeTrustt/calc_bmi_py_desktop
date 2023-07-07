@@ -42,10 +42,12 @@ def calc_bmi():
     try:
         kg = float(weight_entry.get())
         m = int(height_entry.get()) / 100
+       
         if kg <=0 or m <= 0:
             raise ValueError('Вес и рост должны быть больше нуля')
         bmi = kg/(m*m)
         bmi = round(bmi, 1)
+        
         if bmi < 18.5:
             messagebox.showinfo('Итог', f'ИМТ = {bmi} соответствует недостаточному весу')
         elif (bmi > 18.5) and (bmi < 24.9):
