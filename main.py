@@ -4,10 +4,23 @@ from tkinter import messagebox
 from tkinter import filedialog
 import config as cfg
 
+def check_entry_fields(event):
+    if height_entry.get() or weight_entry.get():
+        clearfields_btn.config(state=tk.NORMAL)
+
+def hover_in(event):
+    if event.widget['state'] != 'disabled':
+        event.widget.config(bg="blue", fg="white")
+
+def hover_out(event):
+    if event.widget['state'] != 'disabled':
+        event.widget.config(bg=original_color_btn, fg="black")
+
 # Очистить поля ввода данных
-def clear_fields():
+def clear_fields(event):
     weight_entry.delete(0, tk.END)
     height_entry.delete(0, tk.END)
+    clearfields_btn.config(state=tk.DISABLED, bg=original_color_btn, fg="black")
 
 def update_entry_value(entry, new_value=''):
     entry.delete(0, tk.END)
@@ -73,7 +86,8 @@ weight_entry.grid(row=4, column=3, columnspan=2)
 
 calc_btn = tk.Button(frame,text='Рассчитать ИМТ',command=calc_bmi)
 calc_btn.grid(row=5, column=4)
-clearfields_btn = tk.Button(frame, text="Очистить поля",command=clear_fields).grid(row=5, column=3)
+clearfields_btn = tk.Button(frame, text="Очистить поля",command=lambda event=None: clear_fields(event), state=tk.DISABLED)
+clearfields_btn.grid(row=5, column=3)
 opendialog_btn = tk.Button(frame, text="Заполнить из файла",command=fill_from_file).grid(row=5, column=2, sticky='W')
 
 original_color_btn = calc_btn.cget('bg')
@@ -84,11 +98,14 @@ for child in frame.winfo_children():
         # <Enter> - при переходе курсора мыши на элемент мы меняем цвет фона на красный, а цвет текста на белый
         # <Leave> - когда курсор мыши покидает данный элеменьт мы меняем все на исходные значения
         # навешиваю обработчики события на каждую кнопку
-        child.bind('<Enter>', lambda event : event.widget.config(bg="blue", fg="white"))
-        child.bind('<Leave>', lambda event : event.widget.config(bg=original_color_btn, fg="black"))
+        child.bind('<Enter>', hover_in)
+        child.bind('<Leave>', hover_out)
 
 # calc_bmi будет вызываться каждый раз, когда пользователь нажимает кнопку enter в полях ввода
 height_entry.bind('<Return>', lambda x: calc_bmi())
 weight_entry.bind('<Return>', lambda x: calc_bmi())
+
+height_entry.bind('<KeyRelease>', check_entry_fields)
+weight_entry.bind('<KeyRelease>', check_entry_fields)
 
 root.mainloop()
