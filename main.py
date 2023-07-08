@@ -4,6 +4,7 @@ from tkinter import messagebox
 from tkinter import filedialog
 import config as cfg
 
+
 def check_entry_fields(event):
     if height_entry.get() or weight_entry.get():
         clearfields_btn.config(state=tk.NORMAL)
@@ -60,7 +61,18 @@ def calc_bmi():
             messagebox.showerror('Ошибка', str(e))
         
 root = tk.Tk()
-root.geometry(cfg.app_size)
+
+# Get the screen width and height
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+
+# Calculate the x and y coordinates to center the window
+width, height = cfg.app_size.split('x')
+x = (screen_width - int(width)) // 2
+y = (screen_height - int(height)) // 2
+
+root.geometry(f"{cfg.app_size}+{x}+{y}")
+
 root.title(cfg.app_title) 
 root.config(bg="#9ec9cf")
 root.columnconfigure(0, weight=1)
