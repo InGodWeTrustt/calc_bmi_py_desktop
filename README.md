@@ -1,6 +1,6 @@
 ## Расчет индекса массы тела (ИМТ)
 
-<img src="app.png" alt="main window" height="50%">
+<img src="app.gif" alt="main window" height="50%">
 
 Запуск десктопный программы по следующей команде:
 
