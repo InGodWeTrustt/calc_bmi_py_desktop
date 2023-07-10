@@ -4,7 +4,6 @@ from tkinter import messagebox
 from tkinter import filedialog
 import config as cfg
 
-
 def check_entry_fields(event):
     if height_entry.get() or weight_entry.get():
         clearfields_btn.config(state=tk.NORMAL)
@@ -67,13 +66,17 @@ screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
 
 # Calculate the x and y coordinates to center the window
-width, height = cfg.app_size.split('x')
+width, height = cfg.APP_SIZE.split('x')
 x = (screen_width - int(width)) // 2
 y = (screen_height - int(height)) // 2
 
-root.geometry(f"{cfg.app_size}+{x}+{y}")
+root.geometry(f"{cfg.APP_SIZE}+{x}+{y}")
 
-root.title(cfg.app_title) 
+# Иконка приложения
+icon = tk.PhotoImage(file=f"{cfg.APP_ICO}")
+root.iconphoto(False, icon) 
+
+root.title(cfg.APP_TITLE) 
 root.config(bg="#9ec9cf")
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
@@ -81,7 +84,7 @@ root.rowconfigure(0, weight=1)
 
 frame = tk.Frame(
     root, 
-    bg=cfg.main_bg_color, 
+    bg=cfg.MAIN_BG_COLOR, 
     padx=20, 
     pady=20,
     borderwidth=1,
@@ -89,12 +92,12 @@ frame = tk.Frame(
 )
 frame.grid(column=0, row=0)
 
-height_lbl = tk.Label(frame, text='Введите ваш рост в см',font=('Arial Bold', 10), bg=cfg.main_bg_color, fg="white")
+height_lbl = tk.Label(frame, text='Введите ваш рост в см',font=('Arial Bold', 10), bg=cfg.MAIN_BG_COLOR, fg="white")
 height_lbl.grid(row=3, column=2, sticky='W')
 height_entry = tk.Entry(frame)
 height_entry.grid(row=3, column=3, columnspan=2)
 
-weight_lbl = tk.Label(frame, text='Введите ваш вес в кг',font=('Arial Bold', 10), fg="white", bg=cfg.main_bg_color).grid(row=4, column=2, sticky='W')
+weight_lbl = tk.Label(frame, text='Введите ваш вес в кг',font=('Arial Bold', 10), fg="white", bg=cfg.MAIN_BG_COLOR).grid(row=4, column=2, sticky='W')
 weight_entry = tk.Entry(frame)
 weight_entry.grid(row=4, column=3, columnspan=2)
 
