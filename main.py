@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog
 import config as cfg
+from opt_menu import Option as Opt
 
 def check_entry_fields(event):
     if height_entry.get() or weight_entry.get():
@@ -27,9 +28,12 @@ def update_entry_value(entry, new_value=''):
     entry.insert(0, new_value)
 
 def fill_from_file():
+    """ Заполнить поля ввода данных из текстового файла """
+    
     path = filedialog.askopenfilename()
     # Если файл не выбран или он не текстового формата, завершить выполнение функции
     if path == '' or not path.endswith('.txt'): return 
+    
     with open(path, 'r', encoding='utf-8') as f:
         for line in f:
             name, value = line.strip().split(' ')
@@ -41,10 +45,14 @@ def fill_from_file():
 def calc_bmi():
     try:
         kg = float(weight_entry.get())
-        m = int(height_entry.get()) / 100
+        m = float(height_entry.get())
        
         if kg <=0 or m <= 0:
             raise ValueError('Вес и рост должны быть больше нуля')
+        
+        cur_opt = opt_menu.current
+        m = m if cur_opt == 'м' else m / 100
+
         bmi = kg/(m*m)
         bmi = round(bmi, 1)
         
@@ -57,7 +65,7 @@ def calc_bmi():
         else:
             messagebox.showinfo('Итог', f'ИМТ = {bmi} соответствует ожирению') 
     except ValueError as e:
-            messagebox.showerror('Ошибка', str(e))
+            messagebox.showerror(title='Ошибка', message=str(e))
         
 root = tk.Tk()
 
@@ -92,14 +100,15 @@ frame = tk.Frame(
 )
 frame.grid(column=0, row=0)
 
-height_lbl = tk.Label(frame, text='Введите ваш рост в см',font=('Arial Bold', 10), bg=cfg.MAIN_BG_COLOR, fg="white")
+height_lbl = tk.Label(frame, text='Введите ваш рост',font=('Arial Bold', 10), bg=cfg.MAIN_BG_COLOR, fg="white")
 height_lbl.grid(row=3, column=2, sticky='W')
 height_entry = tk.Entry(frame)
 height_entry.grid(row=3, column=3, columnspan=2)
 
-weight_lbl = tk.Label(frame, text='Введите ваш вес в кг',font=('Arial Bold', 10), fg="white", bg=cfg.MAIN_BG_COLOR).grid(row=4, column=2, sticky='W')
+weight_lbl = tk.Label(frame, text='Введите ваш вес',font=('Arial Bold', 10), fg="white", bg=cfg.MAIN_BG_COLOR).grid(row=4, column=2, sticky='W')
 weight_entry = tk.Entry(frame)
 weight_entry.grid(row=4, column=3, columnspan=2)
+weight_lbl_units = tk.Label(frame, text="кг").grid(row=4, column=6)
 
 calc_btn = tk.Button(frame,text='Рассчитать ИМТ',command=calc_bmi)
 calc_btn.grid(row=5, column=4)
@@ -124,5 +133,8 @@ weight_entry.bind('<Return>', lambda x: calc_bmi())
 
 height_entry.bind('<KeyRelease>', check_entry_fields)
 weight_entry.bind('<KeyRelease>', check_entry_fields)
+
+
+opt_menu = Opt(frame)
 
 root.mainloop()
