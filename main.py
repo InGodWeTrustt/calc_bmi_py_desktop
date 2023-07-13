@@ -1,7 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
-from tkinter import messagebox
-from tkinter import filedialog
+from tkinter import ttk, messagebox, filedialog
 import config as cfg
 from opt_menu import Option as Opt
 
@@ -136,5 +134,13 @@ weight_entry.bind('<KeyRelease>', check_entry_fields)
 
 
 opt_menu = Opt(frame)
+
+def close_window():
+    quit = messagebox.askyesno('Выход из приложения', message="Вы действительно хотите выйти из приложения?")
+    if quit:
+        root.destroy()
+
+
+root.protocol("WM_DELETE_WINDOW", close_window)
 
 root.mainloop()
