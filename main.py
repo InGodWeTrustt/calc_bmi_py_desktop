@@ -5,9 +5,10 @@ from package.mainframe import MainFrame
 
 app = App(
     window_size=cfg.APP_SIZE, 
-    icon_img=cfg.APP_ICO, 
     title=cfg.APP_TITLE
 )
+
+app.set_icon(cfg.APP_ICO)
 
 frame = MainFrame(
     app,

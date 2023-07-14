@@ -2,17 +2,15 @@ import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 
 class App(tk.Tk):
-    def __init__(self, window_size, icon_img, title="Расчет ИМТ"):
+    def __init__(self,*args,  **kwargs):
         super().__init__()
-        self.window_size = window_size
-        self.title = title
+        self.window_size = kwargs.get('window_size', '400x400')
+        self.title(kwargs.get('title', 'Расчет ИМТ'))
         self.config(bg="#9ec9cf")
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
-
         self.protocol("WM_DELETE_WINDOW", self.close_window)
         self.center_window()
-        # self.change_icon(icon_img)
 
     def center_window(self):
         """ Отцентрировать окно приложения """
@@ -28,10 +26,10 @@ class App(tk.Tk):
 
         self.geometry(f"{self.window_size}+{x}+{y}")
 
-    def change_icon(self, file):
+    def set_icon(self, file):
         """ Изменить иконку приложения """
-        icon = tk.PhotoImage(file)
-        self.iconphoto(False, file)
+        icon = tk.PhotoImage(file=file)
+        self.iconphoto(False, icon)
 
     def close_window(self):
         """ Выход из основного приложения"""
