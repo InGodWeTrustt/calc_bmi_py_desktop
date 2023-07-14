@@ -1,3 +1,4 @@
+import sqlite3
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 import package.config as cfg
@@ -37,6 +38,8 @@ class MainFrame(tk.Frame):
         self.clearfields_btn = tk.Button(self, text="Очистить поля",command=lambda event=None: self.clear_fields(event), state=tk.DISABLED)
         self.clearfields_btn.grid(row=5, column=3)
         self.opendialog_btn = tk.Button(self, text="Заполнить из файла",command=self.fill_from_file).grid(row=5, column=2, sticky='W')
+
+        self.load_data()
 
     def events(self):
         for child in  self.winfo_children(): 
@@ -110,7 +113,6 @@ class MainFrame(tk.Frame):
         if event.widget['state'] != 'disabled':
             event.widget.config(bg=self.original_color_btn, fg="black")
 
-    
     def clear_fields(self,event):
         """ Очистить поля ввода данных """
         self.weight_entry.delete(0, tk.END)
@@ -120,3 +122,33 @@ class MainFrame(tk.Frame):
     def update_entry_value(self,entry, new_value=''):
         entry.delete(0, tk.END)
         entry.insert(0, new_value)
+
+    def save_data(self):
+        weight_entry = self.weight_entry.get()
+        height_entry = self.height_entry.get()
+
+        try:
+            conn = sqlite3.connect('data.db')
+            c = conn.cursor()
+            c.execute("CREATE TABLE IF NOT EXISTS measurements (weight REAL, height REAL)")
+            c.execute("INSERT INTO measurements VALUES (?, ?)", (weight_entry, height_entry))
+            conn.commit()
+            conn.close()
+        except sqlite3.Error as e:
+            messagebox.showerror("Error", str(e))
+    
+    def load_data(self):
+        try:
+            conn = sqlite3.connect("data.db")
+            c = conn.cursor()
+            c.execute("SELECT * FROM measurements")
+            data = c.fetchone()
+            conn.close()
+
+            if data:
+                weight, height = data
+                self.weight_entry.insert(0, weight)
+                self.height_entry.insert(0, height)
+        except sqlite3.Error as e:
+            pass
+            # messagebox.showerror("Error", str(e))

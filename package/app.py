@@ -11,6 +11,15 @@ class App(tk.Tk):
         self.rowconfigure(0, weight=1)
         self.protocol("WM_DELETE_WINDOW", self.close_window)
         self.center_window()
+        self._main_frame=None
+
+    @property
+    def main_frame(self, frame):
+        return self_main_frame
+
+    @main_frame.setter
+    def main_frame(self, frame):
+        self._main_frame = frame
 
     def center_window(self):
         """ Отцентрировать окно приложения """
@@ -35,4 +44,5 @@ class App(tk.Tk):
         """ Выход из основного приложения"""
         quit = messagebox.askyesno('Выход из приложения', message="Вы действительно хотите выйти из приложения?")
         if quit:
+            self._main_frame.save_data()
             self.destroy()

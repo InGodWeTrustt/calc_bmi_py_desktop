@@ -19,4 +19,6 @@ frame = MainFrame(
     relief="solid"
 )
 
+app.main_frame = frame
+
 app.mainloop()
