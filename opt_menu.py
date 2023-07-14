@@ -6,9 +6,9 @@ class Option():
         self._current_option = tk.StringVar()
         self.units = ('см', 'м')
         self.master = root
-        self.create_opt_widjet()
+        self.create_opt_widget()
     
-    def create_opt_widjet(self):
+    def create_opt_widget(self):
         opt_menu = ttk.OptionMenu(
             self.master, 
             self._current_option, 
