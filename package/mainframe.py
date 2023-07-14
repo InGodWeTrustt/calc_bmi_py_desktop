@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
-import config as cfg
-from opt_menu import Option as OptionMenu
+import package.config as cfg
+from package.opt_menu import Option as OptionMenu
 
 class MainFrame(tk.Frame):
     def __init__(self, container,*args, **kw):

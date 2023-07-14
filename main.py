@@ -1,7 +1,7 @@
 import tkinter as tk
-import config as cfg
-from app import App
-from mainframe import MainFrame        
+import package.config as cfg
+from package.app import App
+from package.mainframe import MainFrame        
 
 app = App(
     window_size=cfg.APP_SIZE, 
