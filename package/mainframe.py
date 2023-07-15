@@ -130,8 +130,14 @@ class MainFrame(tk.Frame):
         try:
             conn = sqlite3.connect('data.db')
             c = conn.cursor()
-            c.execute("CREATE TABLE IF NOT EXISTS measurements (weight REAL, height REAL)")
-            c.execute("INSERT INTO measurements VALUES (?, ?)", (weight_entry, height_entry))
+            c.execute("CREATE TABLE IF NOT EXISTS measurements (id INTEGER, weight REAL, height REAL)")
+            c.execute('SELECT COUNT(*) FROM measurements')
+            result = c.fetchone()
+
+            if result[0] > 0:
+                 c.execute("UPDATE measurements SET weight = ?, height = ? WHERE id = 1", (weight_entry, height_entry))
+            else:
+                c.execute("INSERT INTO measurements VALUES (?, ?, ?)", (1, weight_entry, height_entry))
             conn.commit()
             conn.close()
         except sqlite3.Error as e:
@@ -146,7 +152,7 @@ class MainFrame(tk.Frame):
             conn.close()
 
             if data:
-                weight, height = data
+                id, weight, height = data
                 self.weight_entry.insert(0, weight)
                 self.height_entry.insert(0, height)
         except sqlite3.Error as e:
