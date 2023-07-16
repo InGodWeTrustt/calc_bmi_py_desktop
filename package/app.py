@@ -5,10 +5,15 @@ class App(tk.Tk):
     def __init__(self,*args,  **kwargs):
         super().__init__()
         self.window_size = kwargs.get('window_size', '400x400')
+
+        # Устанавливаем заголовок окна из словапа по ключу "title". 
+        # При его отстуствии  cтавим дефолтное значение (2 аргумент)
         self.title(kwargs.get('title', 'Расчет ИМТ'))
         self.config(bg="#9ec9cf")
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
+
+        # При закрытии окна будет срабатывать функция обратного вызова - self.closse_window
         self.protocol("WM_DELETE_WINDOW", self.close_window)
         self.center_window()
         self._main_frame=None
