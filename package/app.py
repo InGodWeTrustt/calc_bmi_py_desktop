@@ -15,6 +15,7 @@ class App(tk.Tk):
 
         # При закрытии окна будет срабатывать функция обратного вызова - self.closse_window
         self.protocol("WM_DELETE_WINDOW", self.close_window)
+        self.bind('<Escape>', lambda e: self.close_window(e))
         self.center_window()
         self._main_frame=None
 
@@ -45,7 +46,7 @@ class App(tk.Tk):
         icon = tk.PhotoImage(file=file)
         self.iconphoto(False, icon)
 
-    def close_window(self):
+    def close_window(self, e):
         """ Выход из основного приложения"""
         quit = messagebox.askyesno('Выход из приложения', message="Вы действительно хотите выйти из приложения?")
         if quit:
