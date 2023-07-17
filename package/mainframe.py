@@ -9,8 +9,8 @@ class MainFrame(tk.Frame):
         super().__init__(container, *args, **kw)
         self.grid(column=0, row=0)
         self.create_widgets()
-        self.events()
         self.create_option_menu()
+        self.events()
         self.original_color_btn = self.calc_btn.cget('bg')
 
     def create_widgets(self):
@@ -42,7 +42,7 @@ class MainFrame(tk.Frame):
         self.load_data()
 
     def events(self):
-        for child in  self.winfo_children(): 
+        for child in self.winfo_children(): 
             child.grid_configure(padx=5, pady=5)
             if isinstance(child, tk.Button):
                 # <Enter> - при переходе курсора мыши на элемент мы меняем цвет фона на красный, а цвет текста на белый

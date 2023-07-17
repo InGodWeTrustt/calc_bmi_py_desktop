@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 
 class App(tk.Tk):
-    def __init__(self,*args,  **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__()
         self.window_size = kwargs.get('window_size', '400x400')
 
@@ -14,7 +14,7 @@ class App(tk.Tk):
         self.rowconfigure(0, weight=1)
 
         # При закрытии окна будет срабатывать функция обратного вызова - self.closse_window
-        self.protocol("WM_DELETE_WINDOW", self.close_window)
+        self.protocol("WM_DELETE_WINDOW", lambda e=None: self.close_window(e))
         self.bind('<Escape>', lambda e: self.close_window(e))
         self.center_window()
         self._main_frame=None
